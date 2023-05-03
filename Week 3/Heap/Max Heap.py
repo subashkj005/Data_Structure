@@ -10,7 +10,7 @@ class Max_Heap:
         # Check if left child is larger than root
         if left < n and arr[left] > arr[largest]:
             largest = left
-# git
+
         # Check if right child is larger than largest
         if right < n and arr[right] > arr[largest]:
             largest = right

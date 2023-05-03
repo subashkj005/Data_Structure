@@ -49,11 +49,6 @@ class Trie:
         # If the child node was not deleted, return False to propagate up the recursion stack
         return False
 
-    def words_with_prefix_helper(self, node, prefix, words):
-        if node.is_End:
-            words.append(prefix)
-        for char in node.children:
-            self.words_with_prefix_helper(node.children[char], prefix + char, words)
 
     def words_with_prefix(self, prefix):
         current = self.root
@@ -64,6 +59,12 @@ class Trie:
         words = []
         self.words_with_prefix_helper(current, prefix, words)
         return words
+
+    def words_with_prefix_helper(self, node, prefix, words):
+        if node.is_End:
+            words.append(prefix)
+        for char in node.children:
+            self.words_with_prefix_helper(node.children[char], prefix + char, words)
 
     def get_all_words(self):
         # Create an empty list to hold the words
@@ -93,12 +94,10 @@ trie.insert("app")
 trie.insert("application")
 trie.insert("banana")
 trie.insert("ball")
-# print(trie.search("ball"))
-# trie.delete_word("ball")
-# print(trie.search("ball"))
 
-# print("Words with prefix:-\n",trie.words_with_prefix("app"))
 
+print("Words with prefix:-\n",trie.words_with_prefix("app"))
+print()
 trie.get_all_words()
 trie.delete_word("ball")
 trie.get_all_words()

@@ -91,6 +91,31 @@ class Graph:
         else:
             return False
 
+    def is_cyclic_util(self, v, visited, rec_stack):
+        visited.add(v)
+        rec_stack.add(v)
+
+        for neighbor in self.adj_list [v]:
+            if neighbor not in visited:
+                if self.is_cyclic_util(neighbor, visited, rec_stack):
+                    return True
+            elif neighbor in rec_stack:
+                return True
+
+        rec_stack.remove(v)
+        return False
+
+    def is_cyclic(self):
+        visited = set()
+        rec_stack = set()
+
+        for v in self.adj_list:
+            if v not in visited:
+                if self.is_cyclic_util(v, visited, rec_stack):
+                    return True
+
+        return False
+
 
 
 graph = Graph()
@@ -118,3 +143,6 @@ graph.remove_vertex("C")
 graph.dfs("A")
 print()
 print(graph.has_path_dfs("A","E"))
+print()
+print("check cycle :-")
+print(graph.is_cyclic())
