@@ -21,10 +21,11 @@ bubble_sort(arr)
 Bubble sort is a sorting algorithm that compares two adjacent elements and swaps
 them until they are in the intended order.
 
-Complexity of Bubble Sort:- 
+Time Complexity :- 
 
 Worst case : O(n^2) 
 Best case : O(n) 
+
 Space complexity : O(1)
 
 """
