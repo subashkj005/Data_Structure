@@ -18,7 +18,8 @@ selection_sort(arr)
 
 """
 Selection sort is a sorting algorithm that selects the smallest or minimum element from an unsorted 
-list in each iteration and places that element at the beginning of the unsorted list.
+list in each iteration and places that element at the beginning of the unsorted list and after that 
+starts from the first unsorted element.
 
 Time Complexity	:- 
  
