@@ -17,6 +17,10 @@ def bubble_sort(arr):
 bubble_sort(arr)
 
 """
+
+Bubble sort is a sorting algorithm that compares two adjacent elements and swaps
+them until they are in the intended order.
+
 Complexity of Bubble Sort:-
 
 Worst case : O(n^2) 
