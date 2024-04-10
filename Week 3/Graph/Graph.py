@@ -9,7 +9,7 @@ class Graph:
             return
         return False
 
-    def add_edges(self,v1,v2):
+    def add_edges(self, v1, v2):
         # eg: if vertex A and B passed for edge connection
         if v1 in self.adj_list.keys() and v2 in self.adj_list.keys():
             self.adj_list[v1].append(v2)
@@ -23,7 +23,7 @@ class Graph:
             return True
         return False
 
-    def remove_edges(self,v1,v2):
+    def remove_edges(self, v1, v2):
         if v1 in self.adj_list.keys() and v2 in self.adj_list.keys():
             if v1 in self.adj_list[v2]:
                 self.adj_list[v2].remove(v1)
@@ -49,11 +49,10 @@ class Graph:
         # finally delete the vertex fully(D)
         del self.adj_list[vertex]
 
-
-    def dfs(self, start, visited = None):
+    def dfs(self, start, visited=None):
         if visited == None:
             visited = set()
-            #In set, duplicates are not entered
+            # In set, duplicates are not entered
         visited.add(start)
         print(start, end=" ")
         for key_node in self.adj_list[start]:
@@ -68,7 +67,7 @@ class Graph:
         visited[start] = True
         que.append(start)
 
-        while len(que)>0:
+        while len(que) > 0:
             current = que.pop(0)
             result.append(current)
             neighbours = self.adj_list[current]
@@ -81,7 +80,7 @@ class Graph:
 
     def print_graph(self):
         for vertex in self.adj_list:
-            print(vertex,":",self.adj_list[vertex])
+            print(vertex, ":", self.adj_list[vertex])
 
     def has_path_dfs(self, u, v):
         visited = set()
@@ -91,11 +90,13 @@ class Graph:
         else:
             return False
 
+    # 1. Find cycle
+
     def is_cyclic_util(self, v, visited, rec_stack):
         visited.add(v)
         rec_stack.add(v)
 
-        for neighbor in self.adj_list [v]:
+        for neighbor in self.adj_list[v]:
             if neighbor not in visited:
                 if self.is_cyclic_util(neighbor, visited, rec_stack):
                     return True
@@ -110,12 +111,35 @@ class Graph:
         rec_stack = set()
 
         for v in self.adj_list:
-            if v not in visited:
-                if self.is_cyclic_util(v, visited, rec_stack):
-                    return True
+            if v not in visited and self.is_cyclic_util(v, visited, rec_stack):
+                return True
 
         return False
 
+    # 2. Find cycle
+
+    def dfs_cycle(self, vertex, visited=None, parent=None):
+        if vertex not in self.adj_list.keys():
+            return False
+        if visited is None:
+            visited = set()
+            parent = None
+        visited.add(vertex)
+
+        for each_vertex in self.adj_list[vertex]:
+            if each_vertex not in visited:
+                if self.dfs_cycle(each_vertex, visited, vertex):
+                    return True
+            elif each_vertex != parent:
+                return True
+
+        return False
+
+    def has_cycle(self):
+        for vertex in self.adj_list.keys():
+            if self.dfs_cycle(vertex):
+                return True
+        return False
 
 
 graph = Graph()
@@ -131,18 +155,18 @@ graph.add_edges("A", "D")
 graph.add_edges("B", "D")
 graph.add_edges("C", "E")
 
-# graph.print_graph()
+
 # graph.remove_vertex("D")
 graph.print_graph()
 
 print("DFS:-")
 graph.dfs("A")
 print("\nBFS:-")
-print( graph.bfs("A"))
+print(graph.bfs("A"))
 graph.remove_vertex("C")
 graph.dfs("A")
 print()
-print(graph.has_path_dfs("A","E"))
+print(graph.has_path_dfs("A", "E"))
 print()
 print("check cycle :-")
 print(graph.is_cyclic())
